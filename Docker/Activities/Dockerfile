@@ -1,17 +1,12 @@
-# Specify Base Image
-FROM docker.io/node:18-alpine
-
-# Work Directory
+# Use an existing image as a base
+FROM docker.io/alpine
+ 
+# Create a Work Directory
 WORKDIR /usr/app
-
-#Copy the package.json
-COPY package.json ./
-
-# Install Dependencies
-RUN npm install
-
-# COPY Files
-COPY ./ ./
-
-# Startup Command
-CMD ["npm", "start"]
+ 
+# Download and install a dependency
+RUN apk add --update redis
+ 
+# Tell the image what to do when it starts
+# as a container
+CMD ["redis-server"]
